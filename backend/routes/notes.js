@@ -54,10 +54,10 @@ router.put('/updatenote/:id',fetchuser,async(req,res)=>{
 
     //find the note to be updated and updated it
     let note=await Note.findById(req.params.id);
-    if(!note){res.status(404).send("Not Found")};
+    if(!note){return res.status(404).send("Not Found")};
 
     if(note.user.toString()!==req.user.id){
-        res.status(401).send("Not Allowed");
+       return res.status(401).send("Not Allowed");
     }
 
     note=await Note.findByIdAndUpdate(req.params.id,{$set:newNote},{new:true})
@@ -74,11 +74,11 @@ router.delete('/deletenote/:id',fetchuser,async(req,res)=>{
     // const {title,description,tag}=req.body;
    try {
      let note=await Note.findById(req.params.id);
-    if(!note){res.status(404).send("Not Found")};
+    if(!note){return res.status(404).send("Not Found")};
     
     //allow delete only if user own this note
     if(note.user.toString()!==req.user.id){
-        res.status(401).send("Not Allowed");
+       return res.status(401).send("Not Allowed");
     }
 
     note=await Note.findByIdAndDelete(req.params.id)
