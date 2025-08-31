@@ -20,7 +20,6 @@ const getNotes=async()=>{
         
     });
     const json=await response.json();
-    console.log(json);
     setNotes(json);
 }
 
@@ -35,22 +34,10 @@ const addNote=async(title,description,tag)=>{
         },
         body:JSON.stringify({title,description,tag})
     });
-    const json=await response.json();
-    console.log(json);
-    
-
-    //logic for add note
-    console.log("adding a new newnote");
-    const note=   {
-        "_id": "68b06c8732b16427d3bc54cd4",
-        "user": "68b06598063cfdf2a83e98e8",
-        "title": title,
-        "description": description,
-        "tag": tag,
-        "date": "2025-08-28T21:21:55.488Z",
-        "__v": 0
-    }
-    setNotes(notes.concat(note))
+     //logic for add note
+    const note=await response.json();
+     setNotes(notes.concat(note))   
+   
 }
 //Delete a note
 const deleteNote=async(id)=>{
@@ -64,12 +51,11 @@ const deleteNote=async(id)=>{
        
     });
     const json= response.json();
-    console.log(json);
-
-  console.log("note has been deleted id:" + id);
   const newNotes=notes.filter((note)=>{return note._id!==id});
   setNotes(newNotes);
 }
+
+
 //Edit a note
 const editNote=async(id,title,description,tag)=>{
     //TODO API CALL
@@ -82,7 +68,7 @@ const editNote=async(id,title,description,tag)=>{
         body:JSON.stringify({title,description,tag})
     });
     const json=await response.json();
-     console.log(json);
+     
     
      let newNotes=JSON.parse(JSON.stringify(notes))
     //Logic to edit client
